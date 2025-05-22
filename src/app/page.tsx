@@ -1,9 +1,11 @@
+import CarInfo from "@/components/Home/CarInfo";
 import { Header } from "@/components/shared/Header";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+    <div>
       <Header title="مشخصات بیمه نامه" />
+      <CarInfo />
     </div>
   );
 }
