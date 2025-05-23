@@ -8,9 +8,9 @@ const CAR_INSURANCE_INFO = [
 ];
 export default function CarInfo() {
   return (
-    <div className="pt-5 px-4 flex flex-col items-center">
+    <div className="pt-5 px-6 flex flex-col items-center">
       <Image src="car_plate.svg" alt="plate" width={280} height={50} />
-      <div className="w-full">
+      <div className="w-full pt-5">
         {CAR_INSURANCE_INFO.map((item) => (
           <InfoItem key={item.label} value={item.value} label={item.label} />
         ))}
