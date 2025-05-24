@@ -24,7 +24,7 @@ const COLORS_VARIANTS = {
     outlined: "border border-gray-600 text-gray-600 bg-transparent",
   },
   disabled: {
-    filled: "bg-gray-400 text-white cursor-not-allowed",
+    filled: "bg-gray-200 text-white cursor-not-allowed",
     outlined:
       "border border-gray-400 text-gray-400 bg-transparent cursor-not-allowed",
   },
