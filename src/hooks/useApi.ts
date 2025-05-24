@@ -1,4 +1,3 @@
-// hooks/useApi.ts
 import { apiHandler } from "@/utils/apiHandler";
 import { useCallback, useState } from "react";
 
@@ -6,8 +5,7 @@ interface UseApiParams {
   ep: string;
 }
 
-// Response = T, Body = B
-export function useApi<Response, Body = void>({ ep }: UseApiParams) {
+export function useApi<Response, Body = any>({ ep }: UseApiParams) {
   const [pending, setPending] = useState(false);
   const [data, setData] = useState<Response>();
   const [error, setError] = useState<Error | null>(null);
@@ -15,7 +13,7 @@ export function useApi<Response, Body = void>({ ep }: UseApiParams) {
   const request = useCallback(
     async (options?: {
       method?: "GET" | "POST" | "PUT" | "DELETE";
-      body?: Body;
+      payload?: Body;
     }) => {
       setPending(true);
       setError(null);
@@ -23,7 +21,7 @@ export function useApi<Response, Body = void>({ ep }: UseApiParams) {
         const res = await apiHandler<Response, Body>({
           ep,
           method: options?.method ?? "GET",
-          payload: options?.body ?? null,
+          payload: options?.payload ?? null,
         });
         setData(res);
         return res;

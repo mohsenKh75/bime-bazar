@@ -17,6 +17,7 @@ interface Props {
   hasTwoOptionsFooter?: boolean;
   footerCloseCallback?: (param?: any) => void;
   isFooterButtonDisabled?: boolean;
+  isClosePrevented?: boolean;
 }
 
 export function BottomSheet({
@@ -28,6 +29,7 @@ export function BottomSheet({
   hasTwoOptionsFooter,
   footerCloseCallback,
   isFooterButtonDisabled,
+  isClosePrevented,
 }: Props) {
   const { pushToSheetStack, removeFromSheetStack, sheetStack } =
     useBottomSheet();
@@ -116,14 +118,18 @@ export function BottomSheet({
             color="black"
             className="w-full pt-4"
             disabled={isFooterButtonDisabled}
-            onClick={closeFromFooter}
+            onClick={isClosePrevented ? footerCloseCallback : closeFromFooter}
           >
             انتخاب
           </Button>
         )}
         {hasTwoOptionsFooter && (
           <div className="flex gap-2 pt-4 w-full">
-            <Button color="black" className="w-full" onClick={closeFromFooter}>
+            <Button
+              color="black"
+              className="w-full"
+              onClick={isClosePrevented ? footerCloseCallback : closeFromFooter}
+            >
               تایید
             </Button>
             <Button

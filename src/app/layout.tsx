@@ -4,7 +4,7 @@ import "./globals.css";
 import { BottomSheetProvider } from "@/Providers/BottomSheetProvider";
 
 const vazir = Vazirmatn({
-  subsets: ["arabic"], // Includes Persian glyphs
+  subsets: ["arabic"],
   variable: "--font-vazir",
   display: "swap",
 });

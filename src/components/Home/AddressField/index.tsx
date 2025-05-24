@@ -22,13 +22,14 @@ export function AddressField({ methods }: Props) {
   const { request, pending } = useApi<Array<Address>>({
     ep: GET_ADDRESS_LIST,
   });
-  console.log(errors);
 
   function getAddressListData() {
-    request().then((res) => {
-      if (res) setAddressList(res);
-      setIsOpen(true);
-    });
+    if (!addressList) {
+      request().then((res) => {
+        if (res) setAddressList(res);
+      });
+    }
+    setIsOpen(true);
   }
   const addressId = methods.watch("addressOptions");
   const isAddressSelected = !isUndefined(addressId);
@@ -75,6 +76,13 @@ export function AddressField({ methods }: Props) {
           </>
         )}
       </div>
+      <input
+        type="hidden"
+        {...register("addressOptions", {
+          required:
+            "لطفا آدرسی که می‌خواهید روی بیمه‌نامه درج شود را انتخاب کنید.",
+        })}
+      />
       <BottomSheet
         headerTitle="انتخاب آدرس"
         isOpen={isOpen}
@@ -83,13 +91,6 @@ export function AddressField({ methods }: Props) {
         hasFooter
         footerCloseCallback={() => setIsOpen(false)}
       >
-        <input
-          type="hidden"
-          {...register("addressOptions", {
-            required:
-              "لطفا آدرسی که می‌خواهید روی بیمه‌نامه درج شود را انتخاب کنید.",
-          })}
-        />
         <div>
           {addressList &&
             addressList?.map((address) => (
