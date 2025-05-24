@@ -2,20 +2,33 @@
 
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
-
 import { useBottomSheet } from "@/Providers/BottomSheetProvider";
 import { classnames } from "@/utils/classNames";
-import { isServerSide } from "@/utils/isServerSide";
+import { isServerSide } from "@/utils/helpers";
 import Image from "next/image";
+import { Button } from "../core/Button";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
   headerTitle?: string;
+  hasFooter?: boolean;
+  hasTwoOptionsFooter?: boolean;
+  footerCloseCallback?: (param?: any) => void;
+  isFooterButtonDisabled?: boolean;
 }
 
-export function BottomSheet({ isOpen, onClose, children, headerTitle }: Props) {
+export function BottomSheet({
+  isOpen,
+  onClose,
+  children,
+  headerTitle,
+  hasFooter,
+  hasTwoOptionsFooter,
+  footerCloseCallback,
+  isFooterButtonDisabled,
+}: Props) {
   const { pushToSheetStack, removeFromSheetStack, sheetStack } =
     useBottomSheet();
   const [sheetId, setSheetId] = useState<number | null>(null);
@@ -58,6 +71,13 @@ export function BottomSheet({ isOpen, onClose, children, headerTitle }: Props) {
   const root = document.getElementById("bottom-sheet-root");
   if (!visible || !root) return null;
 
+  function closeFromFooter() {
+    setAnimateIn(false);
+    setTimeout(() => {
+      setVisible(false);
+      footerCloseCallback?.();
+    }, 200);
+  }
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex justify-center items-end bg-black/40 backdrop-md"
@@ -91,6 +111,31 @@ export function BottomSheet({ isOpen, onClose, children, headerTitle }: Props) {
           />
         </div>
         {children}
+        {hasFooter && (
+          <Button
+            color="black"
+            className="w-full pt-4"
+            disabled={isFooterButtonDisabled}
+            onClick={closeFromFooter}
+          >
+            انتخاب
+          </Button>
+        )}
+        {hasTwoOptionsFooter && (
+          <div className="flex gap-2 pt-4 w-full">
+            <Button color="black" className="w-full" onClick={closeFromFooter}>
+              تایید
+            </Button>
+            <Button
+              color="black"
+              variant="outlined"
+              className="w-full"
+              onClick={handleClose}
+            >
+              بازگشت
+            </Button>
+          </div>
+        )}
       </div>
     </div>,
     root
