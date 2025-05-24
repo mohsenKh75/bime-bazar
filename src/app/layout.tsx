@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
 import "./globals.css";
+import { BottomSheetProvider } from "@/Providers/BottomSheetProvider";
 
 const vazir = Vazirmatn({
-  subsets: ["arabic"], // Includes Persian glyphs
+  subsets: ["arabic"],
   variable: "--font-vazir",
   display: "swap",
 });
@@ -24,7 +25,10 @@ export default function RootLayout({
         dir="rtl"
         className={`${vazir.className} antialiased mx-auto max-w-[512px] min-h-screen`}
       >
-        {children}
+        <BottomSheetProvider>
+          {children}
+          <div id="bottom-sheet-root" />
+        </BottomSheetProvider>
       </body>
     </html>
   );
