@@ -10,15 +10,8 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
 }
 
-export function RadioButton({
-  value,
-  name,
-  disabled,
-  required,
-
-  ...rest
-}: Props) {
-  const { register, watch, setValue } = useFormContext();
+export function RadioButton({ value, name, disabled, ...rest }: Props) {
+  const { watch, setValue } = useFormContext();
   const isActive = watch(name) === value;
 
   return (
@@ -27,7 +20,6 @@ export function RadioButton({
         type="radio"
         value={value}
         disabled={disabled}
-        {...register(name, { required })}
         onChange={() => setValue(name, value)}
         {...rest}
         className="hidden peer"
